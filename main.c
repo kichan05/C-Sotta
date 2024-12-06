@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "type.c"
 #include "console.c"
 #include "varient.c"
 #include "scene.c"
@@ -38,25 +39,6 @@ void printMap() {
     }
 }
 
-typedef struct Player {
-    char name[30];
-    int numbers[2];
-    int money;
-    int isDie;
-    struct Player* next;
-} Player;
-
-typedef struct GameManger {
-    int gameMoney;
-    int turn;
-    struct Player* headPlayer;
-} GameManger;
-
-Player* getNewPlayer() {
-    Player* newPlayer = (Player*)malloc(sizeof(Player));
-    newPlayer->next = NULL;
-}
-
 void printSelectorBar(int choiceIndex) {
     char selectors[3][5] = {"하프", "다이", "더블"};
 
@@ -71,49 +53,20 @@ void printSelectorBar(int choiceIndex) {
     }
 }
 
-void printPlayerList(Player* head) {
-    Player* current = head;
-    int count = 0;
-    while(current != NULL) {
-        printf("[%02d] - %s\n", count, current->name);
-        current = current->next;
-        count += 1;
-    }
-}
-
 int main() {
-    char c;
-    int mapKey;
-//    CONSOLE_WIDTH = getConsoleWidth();
-//    CONSOLE_HEIGHT = getConsoleHeight();
-    GameManger gameManger = {0, 0, NULL};
-
 //    system("mode con cols=100 lines=30 | title 섯다");
+    CONSOLE_WIDTH = getConsoleWidth();
+    CONSOLE_HEIGHT = getConsoleHeight();
     hideCursor();
     clearConsole();
 
-    gameManger.headPlayer = getNewPlayer();
-    printf("Input your name : ");
-    scanf("%s", &(gameManger.headPlayer->name));
+    char c;
+    int mapKey;
+    GameManger gameManger = {0, 0, 0, NULL};
 
-    int playerCount;
-    printf("Input player count : ");
-    scanf(" %d", &playerCount);
-
-    Player* currentPlayer = gameManger.headPlayer;
-
-    for(int i = 0; i < playerCount - 1; i++) {
-        Player* newPlayer = getNewPlayer();
-
-        sprintf((char *) &(newPlayer->name), "AI %d", i + 1);
-        currentPlayer->next = newPlayer;
-        currentPlayer = newPlayer;
-    }
+    initPlayerScene(&gameManger);
 
     printPlayerList(gameManger.headPlayer);
-
-
-
 
 //    int menuIndex = menuScene();
 
