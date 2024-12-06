@@ -1,5 +1,7 @@
 #include <stdio.h>
-#include <Windows.h>
+#include <windows.h>
+
+#include "../gameModule.h"
 
 int menuScene() {
     int c, mapKey;
@@ -53,21 +55,3 @@ int menuScene() {
     }
 }
 
-void initPlayerScene(GameManger* gameManger) {
-    gameManger->headPlayer = getNewPlayer();
-    printWithColor(YELLOW,"Input your name : ");
-    scanf("%s", &(gameManger->headPlayer->name));
-
-    printWithColor(YELLOW, "Input player count : ");
-    scanf(" %d", &(gameManger->playerCount));
-
-    Player* currentPlayer = gameManger->headPlayer;
-
-    for(int i = 0; i < gameManger->playerCount - 1; i++) {
-        Player* newPlayer = getNewPlayer();
-
-        sprintf((char *) &(newPlayer->name), "AI %d", i + 1);
-        currentPlayer->next = newPlayer;
-        currentPlayer = newPlayer;
-    }
-}

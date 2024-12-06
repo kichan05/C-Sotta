@@ -4,7 +4,8 @@
 #include "type.c"
 #include "console.c"
 #include "varient.c"
-#include "scene.c"
+#include "scene/menuScene.c"
+#include "playerInitScene.h"
 
 int CONSOLE_WIDTH, CONSOLE_HEIGHT;
 
